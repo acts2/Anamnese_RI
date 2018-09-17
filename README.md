@@ -31,7 +31,9 @@ https://www.mdsaude.com/
 9. Diferentes tags  
 http://www.portalnatural.com/doencas-de-a-a-z/
 10. Título variado e em diferentes tags  
-http://portal.saude.pe.gov.br/verbete
+http://portal.saude.pe.gov.br/verbete  
+
+**Obs. Site escrito e/ou revisado por médicos: itens 1, 2, 3 e 5.**
 
 -- Outros (em linguagem natural)  
 https://drauziovarella.uol.com.br/doencas-e-sintomas/leptospirose/  
