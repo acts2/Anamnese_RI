@@ -29,4 +29,23 @@ def getDataFrame(text_list,label_list):
 
 	return df
 
+#divide o conjunto de dados entre conjunto de treinamento e validacao
+def splitDataSet(dataFrame):
+	train_text, test_text, train_label, test_label = model_selection.train_test_split(dataFrame['text'],dataFrame['labels'])
+
+	return train_text, test_text
+
+
+#transforma os textos em vetores de features para serem classificados
+#tf-idf
+from sklearn.feature_extraction.text import TfidfVectorizer
+def tfidf(df,train_text,valid_text):
+	vectorizer = TfidfVectorizer()
+	vectorizer.fit(df['text'])
+	train_transform = vectorizer.transform(train_text)
+	valid_transform = vectorizer.transform(valid_text)
+	print(vectorizer.get_feature_names(train_transform))
+
+	return train_transform, valid_transform
+
 
