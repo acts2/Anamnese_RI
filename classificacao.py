@@ -47,7 +47,7 @@ def splitDataSet(dataFrame):
 #transforma os textos em vetores de features para serem classificados
 #tf-idf
 from sklearn.feature_extraction.text import TfidfVectorizer
-def tfidf(df,train_text,valid_text):
+def tfidf(df,train_text,valid_text): #testar outro extrator de feature
 	vectorizer = TfidfVectorizer()
 	#vectorizer.fit(df['text'])
 	train_transform = vectorizer.fit_transform(train_text)
@@ -60,7 +60,7 @@ def tfidf(df,train_text,valid_text):
 #estrategia: remover features com menor variância
 from sklearn.feature_selection import SelectPercentile, f_classif
 
-def selecao_features(features_train,features_test,labels_train):
+def selecao_features(features_train,features_test,labels_train):#testar outro seletor
 	sel = SelectPercentile(f_classif, percentile = 10)
 	sel.fit(features_train, labels_train)
 	features_train_sel = sel.transform(features_train).toarray()
@@ -105,6 +105,7 @@ def abre():
 	return rotulos, links
 
 from sklearn.naive_bayes import GaussianNB
+from multiprocessing import Pool
 def preprocessing():
 
 	html = []
@@ -114,9 +115,14 @@ def preprocessing():
 	print(len(label),len(link))
 
 	#pega o html dos links
-	html = getHTML(link)
+	pool = Pool(processes=4)
+
+	h1,h2,h3,h4 = pool.map(getHTML,[link[:40],link[40:80],link[80:120],link[120:160]])
+
+	html = h1+h2+h3+h4
+	
 	#print(type(html[0]))
-	#html1 = getHTML(link[21:40:])
+	
 
 
 	df = getDataFrame(html,label)
