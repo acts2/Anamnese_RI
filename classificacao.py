@@ -58,7 +58,7 @@ def tfidf(df,train_text,valid_text): #testar outro extrator de feature
 
 #feature selection
 #estrategia: remover features com menor variância
-from sklearn.feature_selection import SelectPercentile, f_classif
+from sklearn.feature_selection import SelectPercentile, f_classif, SelectKBest, chi2
 
 def selecao_features(features_train,features_test,labels_train):#testar outro seletor
 	sel = SelectPercentile(f_classif, percentile = 10)
@@ -67,6 +67,12 @@ def selecao_features(features_train,features_test,labels_train):#testar outro se
 	features_test_sel = sel.transform(features_test).toarray()
 
 	print(len(features_train_sel),len(features_test_sel))
+
+	"""sel = SelectKBest(chi2)
+	sel.fit(features_train, labels_train)
+	features_train_sel = sel.transform(features_train).toarray()
+	features_test_sel = sel.transform(features_test).toarray()
+	print(len(features_train_sel),len(features_test_sel))"""
 
 	return features_train_sel, features_test_sel
 
@@ -80,10 +86,14 @@ def modelo_treinamento(classificador, vetor_treino, rotulos_treino,vetor_teste):
 
 	return pred
 
-from sklearn.metrics import accuracy_score
-def acuracia(pred,rotulos_teste):
-	acuracia = accuracy_score(pred,rotulos_teste)
-	return acuracia
+from sklearn.metrics import accuracy_score, recall_score, precision_score
+def metricas(pred,rotulos_teste):
+	acuracia = accuracy_score(rotulos_teste,pred)
+	precisao = precision_score(rotulos_teste,pred, pos_label='positivo')
+	recall = recall_score(rotulos_teste,pred,pos_label='positivo')
+
+
+	return acuracia, precisao, recall
 
 
 #pre-processamento
@@ -115,11 +125,13 @@ def preprocessing():
 	print(len(label),len(link))
 
 	#pega o html dos links
-	pool = Pool(processes=4)
+	"""pool = Pool(processes=4)
 
 	h1,h2,h3,h4 = pool.map(getHTML,[link[:40],link[40:80],link[80:120],link[120:160]])
 
-	html = h1+h2+h3+h4
+	html = h1+h2+h3+h4"""
+
+	html = getHTML(link)
 	
 	#print(type(html[0]))
 	
@@ -133,13 +145,8 @@ def preprocessing():
 
 	train_sel, valid_sel = selecao_features(train_text_transform, valid_text_transform,train_L)
 
-	predict = modelo_treinamento(GaussianNB(),train_sel, train_L,valid_sel)
-
-	acc = acuracia(predict, test_L)
-
 	
-
-	return predict, acc, test_L
+	return train_sel, valid_sel, train_L, test_L
 	
 
 
