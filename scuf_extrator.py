@@ -31,11 +31,11 @@ def scufScraping(start):
 	return clean
 
 
-def scrap(lista):
+def scrap():
 	scuf_site = {}
 	index = 41
 
-	for link in lista:
+	for link in scuf_list:
 		atr_values = []
 
 		soup = msf_extrator.get_html(link)	

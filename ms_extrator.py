@@ -28,11 +28,11 @@ def msScraping(start):
 
 	return clean
 
-def scrap(lista):
+def scrap():
 	ms_site = {}
 	index = 31
 
-	for link in lista:
+	for link in ms_list:
 		atr_values = []
 		
 		soup = msf_extrator.get_html(link)		

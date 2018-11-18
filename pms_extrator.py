@@ -36,11 +36,11 @@ def pmsScraping(start):
 
 	return clean
 
-def scrap(lista):
+def scrap():
 	pms_site = {}
 	index = 21
 
-	for link in lista:
+	for link in pms_list:
 		atr_values = []
 		
 		soup = msf_extrator.get_html(link)		

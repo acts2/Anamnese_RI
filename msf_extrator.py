@@ -46,11 +46,11 @@ def atributos(lista):
 	#df = pandas.DataFrame(dic)
 	return dic
 
-def scrap(lista):
+def scrap():
 
 	msf_site = {}
 	index = 1
-	for link in lista:
+	for link in msf_list:
 		atr_values = []
 		
 		soup = get_html(link)		
@@ -80,7 +80,5 @@ def scrap(lista):
 
 	return msf_site
 
-
-msf = scrap(msf_list)
 
 

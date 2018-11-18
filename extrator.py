@@ -34,13 +34,45 @@ scuf_list = ['https://www.saudecuf.pt/mais-saude/doencas-a-z/faringite', 'https:
  'https://www.saudecuf.pt/mais-saude/doencas-a-z/lupus', 'https://www.saudecuf.pt/mais-saude/doencas-a-z/bronquite',
  'https://www.saudecuf.pt/mais-saude/doencas-a-z/endometriose', 'https://www.saudecuf.pt/mais-saude/doencas-a-z/sarampo']
 
+all_links = mv_list + pms_list + ms_list + scuf_list
 
+def msfScrap():
+
+	msfSite = {}
+	index = 1
+
+	for link in msf_list:		
+		content = msf_extrator.get_html(link)
+		paragraph = str(content.find('div', {'class':'bl-esq'}))
+
+		bl_dir = content.find_all('div', {'class':'bl-dir'})
+		bl = list(bl_dir)
+		
+		for i in bl:		
+			paragraph += str(i.find('p'))
+
+		span = content.find_all('span')
+		span = list(span)                                      
+		for i in span:
+			paragraph += str(i)
+
+		paragraph += str(content.find('div', {'class':'atv-txt'}).find('p'))
+		paragraph += str(content.find('section', {'class':'bl-atv-mdc'}).find('p'))
+
+		clean = msf_extrator.cleaning(str(paragraph))
+
+		msfSite[index] = clean
+		index +=1
+
+	return msfSite
 
 def scrap():
 
-	all_links = msf_list + mv_list + pms_list + ms_list + scuf_list
+	
 	all_sites = {}
-	index = 1
+	msf = msfScrap()
+	als = {}
+	index = 11
 
 	for link in all_links:
 
@@ -53,5 +85,14 @@ def scrap():
 		all_sites[index] = clean
 		index +=1
 
-	return all_sites
+	als = {**msf, **all_sites}
+
+	return als
+
+
+
+
+
+
+
 

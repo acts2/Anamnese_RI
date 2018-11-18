@@ -31,11 +31,11 @@ def minhavida_scraping(start):
 	return clean
 
 
-def scrap(lista):
+def scrap():
 
 	mv_site = {}
 	index = 11
-	for link in lista:
+	for link in mv_list:
 		atr_values = []
 		soup = msf_extrator.get_html(link)
 		title = soup.title.get_text().split(':')[0]
