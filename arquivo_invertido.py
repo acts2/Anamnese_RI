@@ -66,9 +66,8 @@ def preprocessing_version2():
 
 from collections import defaultdict, Counter
 import pandas
-def create_index():
-
-	tokens = preprocessing()
+def create_index(tokens):
+	
 	index = defaultdict(list)
 	ind = defaultdict(list)
 
@@ -86,8 +85,8 @@ def create_index():
 
 	return index, ind
 
-def create_compression_index():
-	tokens = preprocessing()
+def create_compression_index(tokens):
+	
 	index = defaultdict(list)
 	ind = defaultdict(list)
 	new_index = defaultdict(list)
@@ -96,7 +95,6 @@ def create_compression_index():
 		for term in token:
 			index[term].append(i)
 			ind[term].append(i)
-
 
 	
 	for k in index.keys():
@@ -108,8 +106,8 @@ def create_compression_index():
 			aux.append(count[j] - count[j-1])
 			j += 1
 
-
 		index[k] = aux
+		
 
 	for k in index.keys():
 		aux = list(zip(ind[k],index[k]))
@@ -123,21 +121,10 @@ def create_compression_index():
 	return index, new_index
 
 
-def create_new_index():
+	
 
-	tokens = preprocessing_version2()
-	index = defaultdict(list)
 
-	for i, token in tokens:
-		for term in token:
-			index[term].append(i)
 
-	for k in index.keys():
-		count = Counter(index[k])
-		count = list(count.items())		
-		index[k] = count
-
-	return index
 
 
 
